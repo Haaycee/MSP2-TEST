@@ -1,0 +1,44 @@
+services:
+  orders-db:
+    image: postgres:16-alpine
+    container_name: orders-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: orders_user
+      POSTGRES_PASSWORD: orders_password
+      POSTGRES_DB: orders_db
+    ports:
+      - "5435:5432"
+    volumes:
+      - orders_data:/var/lib/postgresql/data
+    networks:
+      - orders-network
+
+  orders-api:
+    build: .
+    container_name: orders-api
+    restart: always
+    ports:
+      - "3002:3002"
+    environment:
+      DATABASE_HOST: orders-db
+      DATABASE_PORT: 5432
+      DATABASE_USERNAME: orders_user
+      DATABASE_PASSWORD: orders_password
+      DATABASE_NAME: orders_db
+      PORT: 3002
+      RABBITMQ_URL: amqp://admin:admin123@rabbitmq:5672
+    depends_on:
+      - orders-db
+    networks:
+      - orders-network
+      - microservices_network
+
+volumes:
+  orders_data:
+
+networks:
+  orders-network:
+    driver: bridge
+  microservices_network:
+    external: true
