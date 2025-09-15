@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5434:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - products-network
+
+  app:
+    build: .
+    container_name: api-products
+    restart: always
+    ports:
+      - "3001:3002"
+    env_file:
+      - .env
+    environment:
+      RABBITMQ_URL: amqp://admin:admin123@rabbitmq:5672
+    depends_on:
+      - db
+    networks:
+      - products-network
+      - microservices_network
+
+volumes:
+  db_data:
+
+networks:
+  products-network:
+    driver: bridge
+  microservices_network:
+    external: true
