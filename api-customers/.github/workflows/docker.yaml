@@ -1,0 +1,35 @@
+name: Docker
+
+on:
+  workflow_run:
+    workflows: ["Test"]
+    types:
+      - completed
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to ghcr
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build docker image
+        run: |
+          IMAGE_TAG=ghcr.io/mspr-epsi-24-26/api-customers:${{ github.sha }}
+          docker build -t $IMAGE_TAG .
+
+      - name: Push docker image
+        run: |
+          docker push ghcr.io/mspr-epsi-24-26/api-customers:${{ github.sha }}
