@@ -1,9 +1,13 @@
 import { Controller, Get, Param, Post, Patch, Put, Delete } from '@nestjs/common';
 import { CustomerService } from './customer.service';
+import { MetricsService } from './metrics/metrics.service';
 
 @Controller("customers")
 export class CustomerController {
-  constructor(private readonly customerService: CustomerService) {}
+  constructor(
+    private readonly customerService: CustomerService,
+    private readonly metricsService: MetricsService,
+  ) {}
 
   @Get()
   findAll(): string[] {
