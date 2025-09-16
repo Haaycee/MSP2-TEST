@@ -14,10 +14,15 @@ import {
 import { OrdersService } from './orders.service';
 import { CreateOrderDto, UpdateOrderDto } from './dto';
 import { OrderStatus } from './entities';
+import { MetricsService } from 'src/metrics/metrics.service';
 
 @Controller('orders')
 export class OrdersController {
-  constructor(private readonly ordersService: OrdersService) {}
+  constructor(
+    private readonly ordersService: OrdersService,
+    private readonly metricsService: MetricsService,
+
+  ) {}
 
   @Post()
   @HttpCode(HttpStatus.CREATED)

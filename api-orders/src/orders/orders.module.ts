@@ -14,7 +14,7 @@ import { MessageBrokerClient } from '../message-broker/message-broker.client';
     {
       provide: MessageBrokerClient,
       useFactory: () => {
-        const rabbitmqUrl = process.env.RABBITMQ_URL || 'amqp://admin:admin123@rabbitmq:5672';
+        const rabbitmqUrl = process.env.RABBITMQ_URL || 'amqp://admin:admin123@rabbitmq-service:5672';
         return new MessageBrokerClient(rabbitmqUrl);
       },
     },

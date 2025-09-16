@@ -10,7 +10,7 @@ export class MessageBrokerClient implements OnModuleInit {
   private _isInitialized = false;
 
   constructor(rabbitmqUrl?: string) {
-    this.rabbitmqUrl = rabbitmqUrl || process.env.RABBITMQ_URL || 'amqp://admin:admin123@rabbitmq:5672';
+    this.rabbitmqUrl = rabbitmqUrl || process.env.RABBITMQ_URL || 'amqp://admin:admin123@rabbitmq-service:5672';
   }
 
   async onModuleInit() {
