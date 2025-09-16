@@ -18,6 +18,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { SeedService } from '../seeds/seed.service';
 import { StockService } from './stock.service';
+import { MetricsService } from 'src/metrics/metrics.service';
 
 @Controller('products')
 @UsePipes(new ValidationPipe({ transform: true }))
@@ -26,6 +27,8 @@ export class ProductsController {
     private readonly productsService: ProductsService,
     private readonly seedService: SeedService,
     private readonly stockService: StockService,
+    private readonly metricsService: MetricsService,
+
   ) {}
 
   @Post()

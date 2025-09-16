@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { ProductsModule } from './products/products.module';
 import { SeedModule } from './seeds/seed.module';
 import { Product } from './products/entities/product.entity';
+import { MetricsModule } from './metrics/metrics.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { Product } from './products/entities/product.entity';
     }),
     ProductsModule,
     SeedModule,
+    MetricsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
