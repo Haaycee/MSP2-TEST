@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-service-orders
+  namespace: api-orders
+spec:
+  selector:
+    app: db-orders
+  ports:
+    - port: 5432
+      targetPort: 5432
+  type: ClusterIP

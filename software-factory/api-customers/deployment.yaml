@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-customers
+  namespace: api-customers
+  labels:
+    app: api-customers
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: api-customers
+  template:
+    metadata:
+      labels:
+        app: api-customers
+    spec:
+      imagePullSecrets:
+        - name: ghcr-secret
+      containers:
+        - name: api-customers
+          image: ghcr.io/mspr-epsi-24-26/api-customers:5677e70b41f49081bb51c06122953ba24ee74666
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: PORT
+              value: "3000"
+            - name: DATABASE_HOST
+              value: "db-service-customers"
+            - name: DATABASE_PORT
+              value: "5432"
+            - name: DATABASE_USER
+              value: "user"
+            - name: DATABASE_PASSWORD
+              value: "password"
+            - name: DATABASE_NAME
+              value: "api_customers"
